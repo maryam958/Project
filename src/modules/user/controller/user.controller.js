@@ -34,7 +34,7 @@ export const UpdateUser=(req,res)=>{
     let {id}=req.params;
     let {password}=req.body;
     qDB.execute(`UPDATE users SET password=${password} WHERE id='${id}'`,(err,result)=>{
-                console.log(err);
+                // console.log(err);
                 if(err){
                     res.json({message:"sql error",err})
                 }
@@ -75,7 +75,7 @@ export const DeleteUser=(req,res)=>{
 export const getUserById=(req,res)=>{
     let {id}=req.params;
     qDB.execute(`SELECT * FROM users WHERE id=${id} `,(err,result)=>{
-        console.log(err);
+        // console.log(err);
         if(err){
             res.json({message:"sql error",err})
         }

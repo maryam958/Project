@@ -162,7 +162,7 @@ export const ChangeStatus = asyncHandler(async (req, res, next) => {
   qDB.execute(
     `UPDATE projects SET status='${status}' WHERE id='${id}'`,
     (err, result) => {
-      console.log(err);
+      // console.log(err);
       if (err) {
         res.json({ message: "sql error", err });
       } else {

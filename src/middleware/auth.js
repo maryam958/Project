@@ -11,18 +11,18 @@ export const roles={
 export const auth = (acceptedRoles = [roles.Admin]) => {
   return async (req, res, next) => {
     const { authorization } = req.headers;
-    console.log({ authorization });
-    console.log(acceptedRoles);
+    // console.log({ authorization });
+    // console.log(acceptedRoles);
     // if doesnot start with Bearer
     if (!authorization?.startsWith(process.env.BearerKey)) {
       next(new Error("In-valid Bearer key", { cause: 400 }));
     } else {
       const token = authorization.split(process.env.BearerKey)[1];
-      console.log("token",token);
+      // console.log("token",token);
       const decoded = jwt.verify(token, process.env.tokenSignature);
-      console.log("decoded",decoded);
+      // console.log("decoded",decoded);
       if (!decoded?.id || !decoded?.isLoggedIn) {
-        console.log(decoded);
+        // console.log(decoded);
         next(new Error("In-valid token payload", { cause: 400 }));
       } else {
           const user = await qDB.execute(`SELECT id,email,username,role FROM users where id='${decoded.id}'`,(err,result)=>{
@@ -37,14 +37,14 @@ export const auth = (acceptedRoles = [roles.Admin]) => {
               } 
               else {
                 const userRow = result[0];
-                console.log(userRow);
+                // console.log(userRow);
                 if(userRow){
                   const userRole =userRow.role;
-                  console.log(userRole);
-                  console.log("acc",acceptedRoles.includes(userRole));
+                  // console.log(userRole);
+                  // console.log("acc",acceptedRoles.includes(userRole));
                   if (acceptedRoles.includes(userRole) ==false) {
                     req.user = userRow;
-                    console.log("usserr",userRow);
+                    // console.log("usserr",userRow);
                     next();
                   } else {
                     next(new Error("Not authorized user", { cause: 403 }));
